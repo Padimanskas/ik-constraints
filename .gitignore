@@ -1,0 +1,4 @@
+.idea/
+node_modules/
+dist/ik-constraints.bundle.js
+package-lock.json
