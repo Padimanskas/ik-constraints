@@ -1,32 +1,32 @@
-const config = {
+module.exports = {
     entry: ['./src/main.js'],
+    devtool: 'inline-source-map',
     output: {
-      path: __dirname + '/dist',
-      filename: 'ik-constraints.bundle.js'
+        path: __dirname + '/dist',
+        filename: 'ik-constraints.bundle.js'
     },
     module: {
-      rules: [
-        {
-          loader:'babel-loader',
-          test: /\.js$/,
-          exclude:  /node_modules/,
-          query: {
-             presets: ['es2015'] 
-          }
-        }
-      ]
+        rules: [
+            {
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
     },
     resolve: {
-      extensions: ['.js'],
-	  alias: {
-		jquery: "jquery/src/jquery",
-		pixi: "pixi.js/dist/pixi"
-      }
+        extensions: ['.js'],
+        alias: {
+            jquery: "jquery/src/jquery",
+            pixi: "pixi.js/dist/pixi"
+        }
     },
-    devServer:{
-      port: 8080,
-      contentBase: __dirname + '/dist',
-      inline: true
+    devServer: {
+        port: 8080,
+        contentBase: __dirname + '/dist',
+        inline: true
     }
-}
-module.exports = config;
+};
