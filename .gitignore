@@ -2,3 +2,5 @@
 node_modules/
 dist/ik-constraints.bundle.js
 package-lock.json
+dist/main.js.map
+dist/main.js

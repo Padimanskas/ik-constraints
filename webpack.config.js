@@ -1,29 +1,33 @@
 module.exports = {
-    entry: ['./src/main.js'],
-    devtool: 'inline-source-map',
+    entry: './src/main.ts',
+    devtool: 'source-map',
     output: {
-        path: __dirname + '/dist',
-        filename: 'ik-constraints.bundle.js'
+        path: __dirname,
+        filename: './dist/[name].js'
     },
     module: {
         rules: [
             {
-                loader: 'babel-loader',
                 test: /\.js$/,
+                loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
             }
         ]
     },
     resolve: {
-        extensions: ['.js'],
-        alias: {
-            jquery: "jquery/src/jquery",
-            pixi: "pixi.js/dist/pixi"
-        }
+        extensions: ['.ts', '.js']
     },
+
+
+
     devServer: {
         port: 8080,
         contentBase: __dirname + '/dist',

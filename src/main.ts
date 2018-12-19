@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import IKChain from './chain.class';
 
 let chain = new IKChain(4, 100);
@@ -24,7 +23,7 @@ function loop() {
 
 loop();
 
-$('#canvas').mousemove(function (e) {
+document.getElementById('canvas').addEventListener('mousemove', function (e: MouseEvent) {
     mouse.x = e.offsetX;
     mouse.y = e.offsetY;
 });
