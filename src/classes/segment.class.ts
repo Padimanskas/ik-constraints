@@ -48,5 +48,13 @@ export default class IKSegment {
         this.jointHead.setPosition(this.segmentHead);
         this.jointTail.setPosition(this.segmentTail);
 
+        let spindleX = (this.segmentTail.x + this.segmentHead.x) / 2;
+        let spindleY = (this.segmentTail.y + this.segmentHead.y) / 2;
+
+
+        let angle = Math.atan2(this.segmentHead.y - this.segmentTail.y, this.segmentHead.x - this.segmentTail.x);
+
+        this.spindle.setPosition(<PointCoordinates>{x: spindleX, y: spindleY});
+        this.spindle.rotateAt(angle);
     }
 }

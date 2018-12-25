@@ -14,6 +14,7 @@ export default class Joint implements Entity {
     setPosition(point: PointCoordinates): void {
         this.joint.setPosition(point);
     }
+
     getPosition(): PointCoordinates {
         return this.joint.getPosition();
     }

@@ -20,6 +20,7 @@ app.ticker.add(function(delta) {
 const Renderer = {
     createSprite(sprImagePath: string): SpriteInterface {
         const sprite = Sprite.fromImage(sprImagePath);
+        sprite.anchor.set(0.5);
         app.stage.addChild(sprite);
         return {
             getPosition: (): PointCoordinates  => {
@@ -30,6 +31,9 @@ const Renderer = {
                 const {x, y} = coords;
                 sprite.x = x;
                 sprite.y = y;
+            },
+            rotateAt: (angle: number): void => {
+                sprite.rotation = angle;
             }
         };
     },

@@ -18,4 +18,8 @@ export default class Spindle implements Entity {
     getPosition(): PointCoordinates {
         return this.spindle.getPosition();
     }
+
+    rotateAt(angle: number): void {
+        this.spindle.rotateAt(angle);
+    }
 }
