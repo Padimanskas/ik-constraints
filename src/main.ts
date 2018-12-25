@@ -1,15 +1,10 @@
 import IKChain from './classes/chain.class';
 import renderer from './renderer';
+import PointCoordinates from './interfaces/point.interface';
 
-let chain = new IKChain(3, 100);
-let target = {
-    x: 0,
-    y: 0
-};
-let mouse = {
-    x: 0,
-    y: 0
-};
+const chain = new IKChain(3, 100);
+const target = <PointCoordinates>{x: 0, y: 0};
+const mouse = <PointCoordinates>{x: 0, y: 0};
 
 chain.generate();
 
