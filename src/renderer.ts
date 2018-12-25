@@ -1,6 +1,8 @@
 import {Application, Sprite} from 'pixi.js';
 import PointCoordinates from './interfaces/point.interface';
 import SpriteInterface from './interfaces/sprite.interface';
+import ObjectToUpdate from './interfaces/obj-to-update.interface';
+
 
 
 const viewportWidth = 800;
@@ -31,7 +33,7 @@ const Renderer = {
             }
         };
     },
-    pushToUpdate(obj: any, coords?: PointCoordinates): void {
+    pushToUpdate(obj: ObjectToUpdate, coords?: PointCoordinates): void {
         objectsToUpdate.push({obj, coords});
     }
 };

@@ -27,14 +27,13 @@ export default class IKSegment {
         this.jointTail = new JointClass('assets/circle.png');
     }
 
-    update() {
-        // Position derivitives
+    update(): void {
         const dx = this.segmentHead.x - this.segmentTail.x;
         const dy = this.segmentHead.y - this.segmentTail.y;
 
         const dist = Math.sqrt(dx * dx + dy * dy);
         let force = 0.5 - this.segmentSize / dist * 0.5;
-        const strength = 0.995; // No springiness
+        const strength = 0.995;
 
         force *= 0.99;
 

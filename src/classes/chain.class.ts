@@ -15,7 +15,7 @@ export default class IKChain {
         this.IKSegment = IKSeg;
     }
 
-    update(target: PointCoordinates) {
+    update(target: PointCoordinates): void {
 
         let link = this.links[0];
 
@@ -28,7 +28,7 @@ export default class IKChain {
         }
     }
 
-    generate() {
+    generate(): void {
         let point = {x: 0, y: 0},
             IKSegment = this.IKSegment,
             link = null;
