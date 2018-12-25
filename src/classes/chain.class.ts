@@ -1,6 +1,5 @@
-import Renderer from './renderer.class';
 import IKSegment from './segment.class';
-import PointCoordinates from './point.interface';
+import PointCoordinates from '../interfaces/point.interface';
 
 export default class IKChain {
 
@@ -8,15 +7,12 @@ export default class IKChain {
     public interval: number;
     public links: Array<IKSegment>;
     public IKSegment: any;
-    public renderer: Renderer;
 
-    constructor(size: number, interval: number, IKSeg = IKSegment, renderer = Renderer) {
+    constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
         this.interval = interval;
         this.links = new Array(size);
         this.IKSegment = IKSeg;
-        this.renderer = new renderer();
-
     }
 
     update(target: PointCoordinates) {
@@ -44,19 +40,6 @@ export default class IKChain {
             link.segmentTail.x = Math.random() * 500;
             link.segmentTail.y = Math.random() * 500;
             point = link.segmentTail;
-        }
-    }
-
-    draw() {
-        let link = null, p1 = null, p2 = null;
-        this.renderer.clearCanvas();
-        for (let i = 0, n = this.links.length; i < n; ++i) {
-            link = this.links[i];
-            p1 = link.segmentHead;
-            p2 = link.segmentTail;
-            this.renderer.drawCircle(p1.x, p1.y, 10);
-            this.renderer.drawCircle(p2.x, p2.y, 10);
-            this.renderer.drawLine(p1.x, p1.y, p2.x, p2.y);
         }
     }
 }

@@ -1,4 +1,6 @@
-import PointCoordinates from './point.interface';
+import PointCoordinates from '../interfaces/point.interface';
+import SpindleClass from './spindle.class';
+import JointClass from './joint.class';
 
 export default class IKSegment {
 
@@ -8,6 +10,9 @@ export default class IKSegment {
         x: this.segmentHead.x + this.segmentSize,
         y: this.segmentHead.y + this.segmentSize
     };
+    private spindle;
+    private jointHead;
+    private jointTail;
 
     constructor(private size: number, private head: PointCoordinates, private tail: PointCoordinates) {
         this.segmentSize = size;
@@ -16,6 +21,10 @@ export default class IKSegment {
             x: this.segmentHead.x + this.segmentSize,
             y: this.segmentHead.y + this.segmentSize
         };
+
+        this.spindle = new SpindleClass('assets/line.png');
+        this.jointHead = new JointClass('assets/circle.png');
+        this.jointTail = new JointClass('assets/circle.png');
     }
 
     update() {
@@ -36,5 +45,9 @@ export default class IKSegment {
         this.segmentTail.y += fy * strength * 2.0;
         this.segmentHead.x -= fx * (1.0 - strength) * 2.0;
         this.segmentHead.y -= fy * (1.0 - strength) * 2.0;
+
+        this.jointHead.setPosition(this.segmentHead);
+        this.jointTail.setPosition(this.segmentTail);
+
     }
 }

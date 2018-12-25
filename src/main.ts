@@ -1,6 +1,7 @@
-import IKChain from './chain.class';
+import IKChain from './classes/chain.class';
+import renderer from './renderer';
 
-let chain = new IKChain(4, 100);
+let chain = new IKChain(3, 100);
 let target = {
     x: 0,
     y: 0
@@ -12,18 +13,14 @@ let mouse = {
 
 chain.generate();
 
-function loop() {
+renderer.pushToUpdate({update: () => {
     target.x += mouse.x - target.x;
     target.y += mouse.y - target.y;
+}});
 
-    chain.update(target);
-    chain.draw();
-    requestAnimationFrame(loop);
-}
+renderer.pushToUpdate(chain, target);
 
-loop();
-
-document.getElementById('canvas').addEventListener('mousemove', function (e: MouseEvent) {
+document.body.addEventListener('mousemove', function (e: MouseEvent) {
     mouse.x = e.offsetX;
     mouse.y = e.offsetY;
 });
