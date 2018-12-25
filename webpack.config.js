@@ -26,11 +26,10 @@ module.exports = {
         extensions: ['.ts', '.js']
     },
 
-
-
     devServer: {
         port: 8080,
         contentBase: __dirname + '/dist',
-        inline: true
+        inline: true,
+        stats: 'minimal'
     }
 };
