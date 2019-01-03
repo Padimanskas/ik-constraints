@@ -1,6 +1,6 @@
 import PointCoordinates from '../interfaces/point.interface';
-import SpindleClass from './spindle.class';
-import JointClass from './joint.class';
+import render from '../utils/renderer';
+import Utils from '../utils/utils';
 
 export default class IKSegment {
 
@@ -13,8 +13,10 @@ export default class IKSegment {
     private spindle;
     private jointHead;
     private jointTail;
+    private headCaption;
+    private tailCaption;
 
-    constructor(private size: number, private head: PointCoordinates, private tail: PointCoordinates) {
+    constructor(private size: number, private head: PointCoordinates, private tail: PointCoordinates, private utils = Utils) {
         this.segmentSize = size;
         this.segmentHead = head || {x: 0, y: 0};
         this.segmentTail = tail || {
@@ -22,9 +24,13 @@ export default class IKSegment {
             y: this.segmentHead.y + this.segmentSize
         };
 
-        this.spindle = new SpindleClass('assets/line.png');
-        this.jointHead = new JointClass('assets/circle.png');
-        this.jointTail = new JointClass('assets/circle.png');
+        this.spindle = render.createAnimatedSprite(['assets/line0.png', 'assets/line1.png', 'assets/line2.png']);
+        this.jointHead = render.createSprite('assets/circle.png');
+        this.jointTail = render.createSprite('assets/circle.png');
+        //this.headCaption = render.createText('');
+        //this.tailCaption = render.createText('');
+        this.spindle.play(0.2);
+
     }
 
     update(): void {
@@ -33,9 +39,9 @@ export default class IKSegment {
 
         const dist = Math.sqrt(dx * dx + dy * dy);
         let force = 0.5 - this.segmentSize / dist * 0.5;
-        const strength = 0.995;
+        const strength = 1;
 
-        force *= 0.99;
+        force *= 1;
 
         const fx = force * dx;
         const fy = force * dy;
@@ -45,16 +51,30 @@ export default class IKSegment {
         this.segmentHead.x -= fx * (1.0 - strength) * 2.0;
         this.segmentHead.y -= fy * (1.0 - strength) * 2.0;
 
+
+
         this.jointHead.setPosition(this.segmentHead);
         this.jointTail.setPosition(this.segmentTail);
 
-        let spindleX = (this.segmentTail.x + this.segmentHead.x) / 2;
-        let spindleY = (this.segmentTail.y + this.segmentHead.y) / 2;
-
-
-        let angle = Math.atan2(this.segmentHead.y - this.segmentTail.y, this.segmentHead.x - this.segmentTail.x);
-
-        this.spindle.setPosition(<PointCoordinates>{x: spindleX, y: spindleY});
+        let angle = this.utils.getAngleBetweenPoints(this.segmentHead, this.segmentTail);
+        let center = this.utils.getCenterBetweenPoints(this.segmentHead, this.segmentTail);
+        this.spindle.setPosition(center);
         this.spindle.rotateAt(angle);
+
+
+        /*
+
+        this.headCaption.setPosition(<PointCoordinates>{x: this.segmentTail.x, y: this.segmentTail.y});
+
+        this.spindle.getAngle().then(angle => {
+            this.headCaption.setText(`angle: ${angle}`);
+        });
+
+        */
+
+        //this.tailCaption.setPosition(<PointCoordinates>{x:this.segmentTail.x, y:this.segmentTail.y});
+        //this.tailCaption.setText(`tail x: ${Math.round(this.segmentTail.x)}, tail y: ${Math.round(this.segmentTail.y)}`);
+
     }
+
 }

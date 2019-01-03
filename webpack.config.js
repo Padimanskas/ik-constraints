@@ -6,20 +6,20 @@ module.exports = {
         filename: './dist/[name].js'
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015']
-                }
-            },
-            {
-                test: /\.ts$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/
+        rules: [            {
+            test: /\.ts$/,
+            loader: 'ts-loader',
+            exclude: /node_modules/
+        },
+        {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/,
+            query: {
+                presets: ['es2015']
             }
+        }
+
         ]
     },
     resolve: {
@@ -28,7 +28,6 @@ module.exports = {
 
     devServer: {
         port: 8080,
-        contentBase: __dirname + '/dist',
         inline: true,
         stats: 'minimal'
     }
