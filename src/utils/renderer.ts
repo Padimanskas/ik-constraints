@@ -1,4 +1,4 @@
-import {Application, Sprite, Text, Texture, extras, loader} from 'pixi.js';
+import {Application, Sprite, Text, Texture, extras, loader, Point} from 'pixi.js';
 import PointCoordinates from '../interfaces/point.interface';
 import ObjectToUpdate from '../interfaces/obj-to-update.interface';
 
@@ -16,9 +16,10 @@ app.ticker.add(function (delta) {
 });
 
 const Renderer = {
-    createSprite(sprImagePath: string): any {
+    createSprite(sprImagePath: string, index?: number): any {
         const sprite = Sprite.fromImage(sprImagePath);
         sprite.anchor.set(0.5);
+        sprite.scale = new Point(2, 2);
         app.stage.addChild(sprite);
         return {
             getPosition: (): PointCoordinates => {
@@ -31,8 +32,13 @@ const Renderer = {
                 sprite.y = y;
             },
             rotateAt: (angle: number): void => {
-                console.log(angle);
                 sprite.rotation = angle;
+            },
+            setAnchor: (x: number, y: number): void => {
+                sprite.anchor.set(x, y);
+            },
+            setIndex: (index: number): void => {
+                app.stage.setChildIndex(sprite, index);
             }
         };
     },
@@ -51,6 +57,7 @@ const Renderer = {
 
         textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
             animatedSprite.anchor.set(0.5);
+            animatedSprite.scale = new Point(2, 2);
             app.stage.addChild(animatedSprite);
         });
 

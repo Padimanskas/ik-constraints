@@ -1,5 +1,6 @@
 import IKSegment from './segment.class';
 import PointCoordinates from '../interfaces/point.interface';
+import renderer from '../utils/renderer';
 
 export default class IKChain {
 
@@ -7,52 +8,31 @@ export default class IKChain {
     public interval: number;
     public links: Array<IKSegment>;
     public IKSegment: any;
+    private app: any;
 
     constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
         this.interval = interval;
         this.links = [];
         this.IKSegment = IKSeg;
+        this.app = renderer.getApp();
     }
 
     update(target: PointCoordinates): void {
 
         let link = this.links[0];
+        let baseLink = this.links[this.links.length - 1];
 
-        let baseLink = this.links[this.links.length-1];
-
-
-        //let dx = target.x - 100;
-        //let dy = target.y - 100;
-        //let dist = Math.sqrt(dx * dx + dy * dy);
-
-        //if(dist < 32 * 5) {
-            link.segmentHead.x = target.x;
-            link.segmentHead.y = target.y;
-        //}
-
-
-
+        link.segmentHead.x = target.x;
+        link.segmentHead.y = target.y;
 
         for (let i = 0, n = this.links.length; i < n; ++i) {
-
             link = this.links[i];
-
-            //if(i > 0) {
-                link.update();
-              // continue;
-            //}
-
-            //link.segmentHead.x = 100;
-            //link.segmentHead.y = 100;
-
-
+            link.update();
         }
 
-        //baseLink.segmentTail.x = 100;
-        //baseLink.segmentTail.y = 100;
-
-
+        baseLink.segmentTail.x = this.app.screen.width / 2;
+        baseLink.segmentTail.y = this.app.screen.height / 1.3;
 
     }
 
@@ -62,7 +42,12 @@ export default class IKChain {
             link = null;
 
         for (let i = 0, n = this.size; i < n; ++i) {
-            this.links.push( new IKSegment(this.interval, point) );
+            if(i === 0) {
+                this.links.push(new IKSegment('spear', this.interval, point));
+            } else {
+                this.links.push(new IKSegment('', this.interval, point));
+            }
+
             link = this.links[i];
             link.segmentHead.x = Math.random() * 500;
             link.segmentHead.y = Math.random() * 500;
