@@ -13,7 +13,6 @@ export default class IKSegment {
     private spindle;
     private jointHead;
     private jointTail;
-    private spear;
 
     constructor(private type: string, private size: number, private head: PointCoordinates, private tail: PointCoordinates, private utils = Utils) {
         this.segmentSize = size;

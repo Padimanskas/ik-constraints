@@ -1,7 +1,6 @@
 import IKChain from './classes/chain.class';
 import renderer from './utils/renderer';
 import PointCoordinates from './interfaces/point.interface';
-import particleSettings from './particles/emitter-settings';
 
 const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};
@@ -22,18 +21,9 @@ renderer.pushToUpdate({update: () => {
 
 renderer.pushToUpdate(chain, target);
 
-const emitter = renderer.createParticleEmitter(target, [
-    'assets/particle-1.png',
-    'assets/particle-2.png',
-    'assets/particle-3.png'], particleSettings);
-
 document.body.addEventListener('mousemove', function (e: MouseEvent) {
     mouse.x = e.offsetX;
     mouse.y = e.offsetY;
-
-
-    emitter.updatePosition(mouse);
-
 });
 
 

@@ -1,6 +1,8 @@
 import IKSegment from './segment.class';
 import PointCoordinates from '../interfaces/point.interface';
 import renderer from '../utils/renderer';
+import utils from '../utils/utils';
+import particleSettings from '../particles/emitter-settings';
 
 export default class IKChain {
 
@@ -9,6 +11,7 @@ export default class IKChain {
     public links: Array<IKSegment>;
     public IKSegment: any;
     private app: any;
+    private emitter: any;
 
     constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
@@ -16,6 +19,10 @@ export default class IKChain {
         this.links = [];
         this.IKSegment = IKSeg;
         this.app = renderer.getApp();
+        this.emitter = renderer.createParticleEmitter([
+            'assets/particle-1.png',
+            'assets/particle-2.png',
+            'assets/particle-3.png'], particleSettings);
     }
 
     update(target: PointCoordinates): void {
@@ -26,6 +33,8 @@ export default class IKChain {
         link.segmentHead.x = target.x;
         link.segmentHead.y = target.y;
 
+        this.emitter.updatePosition(utils.getCenterBetweenPoints(link.segmentHead, link.segmentTail));
+
         for (let i = 0, n = this.links.length; i < n; ++i) {
             link = this.links[i];
             link.update();
@@ -33,7 +42,6 @@ export default class IKChain {
 
         baseLink.segmentTail.x = this.app.screen.width / 2;
         baseLink.segmentTail.y = this.app.screen.height / 1.3;
-
     }
 
     generate(): void {

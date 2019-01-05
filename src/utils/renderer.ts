@@ -111,7 +111,7 @@ const Renderer = {
     createTexture: (imagePath: string): Texture => {
       return Texture.fromImage(imagePath);
     },
-    createParticleEmitter: (point: PointCoordinates, images: Array<string>, config: any): any => {
+    createParticleEmitter: (images: Array<string>, config: any): any => {
         console.log(config);
         const container = new particles.ParticleContainer();
         const emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
