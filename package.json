@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/pixi.js": "4.8.5",
+    "pixi-particles": "^3.1.0",
     "pixi.js": "4.8.3"
   },
   "devDependencies": {

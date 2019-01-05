@@ -1,6 +1,7 @@
-import {Application, Sprite, Text, Texture, extras, loader, Point} from 'pixi.js';
+import {Application, Sprite, Text, Texture, extras, loader, Point, particles} from 'pixi.js';
 import PointCoordinates from '../interfaces/point.interface';
 import ObjectToUpdate from '../interfaces/obj-to-update.interface';
+import {Emitter} from 'pixi-particles';
 
 
 const viewportWidth = 800;
@@ -106,6 +107,46 @@ const Renderer = {
                 pixiText.text = text;
             }
         }
+    },
+    createTexture: (imagePath: string): Texture => {
+      return Texture.fromImage(imagePath);
+    },
+    createParticleEmitter: (point: PointCoordinates, images: Array<string>, config: any): any => {
+        console.log(config);
+        const container = new particles.ParticleContainer();
+        const emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
+
+        container.setProperties({
+            scale: true,
+            position: true,
+            rotation: true,
+            uvs: true,
+            alpha: true
+        });
+
+        emitter.emit = true;
+        emitter.autoUpdate = true;
+
+        app.stage.addChild(container);
+
+        let elapsed = Date.now();
+
+        const update = function(){
+            requestAnimationFrame(update);
+            const now = Date.now();
+            emitter.update((now - elapsed) * 0.001);
+            elapsed = now;
+        };
+
+        update();
+
+        return {
+            updatePosition: (point: PointCoordinates): void => {
+                container.x = point.x;
+                container.y = point.y;
+            }
+        };
+
     },
     pushToUpdate(obj: ObjectToUpdate, coords?: PointCoordinates): void {
         objectsToUpdate.push({obj, coords});
