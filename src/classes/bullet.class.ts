@@ -15,4 +15,13 @@ export default class Bullet {
         this.sprite.setPosition(<PointCoordinates>{x: this.x, y: this.y});
     }
 
+    getPosition(): PointCoordinates {
+        const {x, y} = this;
+        return <PointCoordinates>{x, y};
+    }
+
+    removeSprite(): void {
+        this.sprite.remove();
+    }
+
 }

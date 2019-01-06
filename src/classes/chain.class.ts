@@ -3,7 +3,7 @@ import PointCoordinates from '../interfaces/point.interface';
 import renderer from '../utils/renderer';
 import utils from '../utils/utils';
 import particleSettings from '../particles/emitter-settings';
-import Bullet from '../classes/bullet.class';
+import Bullets from '../classes/bullets.class';
 
 export default class IKChain {
 
@@ -15,6 +15,8 @@ export default class IKChain {
     private emitter: any;
     public baseLink: any;
     public headLink: any;
+    private bullets = new Bullets();
+
 
     constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
@@ -31,6 +33,8 @@ export default class IKChain {
 
         this.baseLink = this.links[this.links.length - 1];
         this.headLink = this.links[0];
+
+
 
     }
 
@@ -78,8 +82,7 @@ export default class IKChain {
     public shoot(): void {
         const link = this.headLink;
         const angle = utils.getAngleBetweenPoints(link.segmentHead, link.segmentTail);
-        const bullet = new Bullet(link.segmentHead.x, link.segmentHead.y, 15, angle);
-        renderer.pushToUpdate(bullet);
+        this.bullets.createBullet(link.segmentHead.x, link.segmentHead.y, 5, angle);
     }
 
     public prepareToShoot(): void {
@@ -91,7 +94,22 @@ export default class IKChain {
     }
 
     public recoil(): void {
+        const link = this.headLink;
+        const angle = utils.getAngleBetweenPoints(link.segmentHead, link.segmentTail);
 
+        //this.update({x: 100 * Math.cos(angle), y: 100 * Math.cos(angle)});
+
+        //link.segmentHead.x = 100 * Math.cos(angle) - 10;
+        //link.segmentHead.y = 100 * Math.sin(angle) - 10;
+/*
+        link.segmentTail.x = 100 * Math.cos(angle);
+        link.segmentTail.y = 100 * Math.cos(angle);
+
+        link.update();
+*/
+
+
+        //console.log(link.segmentHead);
     }
 
 }
