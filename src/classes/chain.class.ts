@@ -3,6 +3,7 @@ import PointCoordinates from '../interfaces/point.interface';
 import renderer from '../utils/renderer';
 import utils from '../utils/utils';
 import particleSettings from '../particles/emitter-settings';
+import Bullet from '../classes/bullet.class';
 
 export default class IKChain {
 
@@ -12,6 +13,8 @@ export default class IKChain {
     public IKSegment: any;
     private app: any;
     private emitter: any;
+    public baseLink: any;
+    public headLink: any;
 
     constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
@@ -23,12 +26,18 @@ export default class IKChain {
             'assets/particle-1.png',
             'assets/particle-2.png',
             'assets/particle-3.png'], particleSettings);
+
+        this.generate();
+
+        this.baseLink = this.links[this.links.length - 1];
+        this.headLink = this.links[0];
+
     }
 
     update(target: PointCoordinates): void {
 
-        let link = this.links[0];
-        let baseLink = this.links[this.links.length - 1];
+        let link = this.headLink;
+        let baseLink = this.baseLink;
 
         link.segmentHead.x = target.x;
         link.segmentHead.y = target.y;
@@ -65,4 +74,24 @@ export default class IKChain {
         }
 
     }
+
+    public shoot(): void {
+        const link = this.headLink;
+        const angle = utils.getAngleBetweenPoints(link.segmentHead, link.segmentTail);
+        const bullet = new Bullet(link.segmentHead.x, link.segmentHead.y, 15, angle);
+        renderer.pushToUpdate(bullet);
+    }
+
+    public prepareToShoot(): void {
+        this.emitter.emit();
+    }
+
+    public disablePreparing(): void {
+        this.emitter.remove();
+    }
+
+    public recoil(): void {
+
+    }
+
 }

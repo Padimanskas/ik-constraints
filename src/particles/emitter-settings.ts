@@ -4,7 +4,7 @@ const particleSettings = {
 		'end': 1
 	},
 	'scale': {
-		'start': 2,
+		'start': 2.5,
 		'end': 2,
 		'minimumScaleMultiplier': 1
 	},

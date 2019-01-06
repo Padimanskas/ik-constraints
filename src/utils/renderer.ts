@@ -112,7 +112,6 @@ const Renderer = {
       return Texture.fromImage(imagePath);
     },
     createParticleEmitter: (images: Array<string>, config: any): any => {
-        console.log(config);
         const container = new particles.ParticleContainer();
         const emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
 
@@ -127,7 +126,7 @@ const Renderer = {
         emitter.emit = true;
         emitter.autoUpdate = true;
 
-        app.stage.addChild(container);
+
 
         let elapsed = Date.now();
 
@@ -138,9 +137,16 @@ const Renderer = {
             elapsed = now;
         };
 
-        update();
+
 
         return {
+            emit: (): void => {
+                app.stage.addChild(container);
+                //update();
+            },
+            remove: (): void => {
+                app.stage.removeChild(container);
+            },
             updatePosition: (point: PointCoordinates): void => {
                 container.x = point.x;
                 container.y = point.y;

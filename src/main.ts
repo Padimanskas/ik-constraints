@@ -6,8 +6,6 @@ const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};
 const mouse = <PointCoordinates>{x: 0, y: 0};
 
-chain.generate();
-
 const app = renderer.getApp();
 const vpHalfWidth = app.screen.width / 2;
 const vpHalfHeight = app.screen.height / 1.25;
@@ -26,5 +24,12 @@ document.body.addEventListener('mousemove', function (e: MouseEvent) {
     mouse.y = e.offsetY;
 });
 
+document.body.addEventListener('mousedown', function (e: MouseEvent) {
+    chain.prepareToShoot();
+});
 
-
+document.body.addEventListener('mouseup', function (e: MouseEvent) {
+    chain.disablePreparing();
+    chain.shoot();
+    chain.recoil();
+});
