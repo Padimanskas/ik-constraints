@@ -32,6 +32,21 @@ light.setPosition(<PointCoordinates>{x: vpHalfWidth+8, y: vpHalfHeight-55});
 light.play(0.25);
 //////light//////
 
+//////counter//////
+const counter = renderer.createAnimatedSprite([
+    'assets/number-0.png',
+    'assets/number-1.png',
+    'assets/number-2.png',
+    'assets/number-3.png',
+    'assets/number-4.png',
+    'assets/number-5.png',
+    'assets/number-exclamation.png',
+]);
+counter.setPosition(<PointCoordinates>{x: vpHalfWidth + 8, y: vpHalfHeight});
+counter.play(0.05);
+//////counter//////
+
+
 document.body.addEventListener('mousemove', function (e: MouseEvent) {
     mouse.x = e.offsetX;
     mouse.y = e.offsetY;
