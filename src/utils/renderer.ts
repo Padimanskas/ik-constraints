@@ -1,7 +1,7 @@
 import {Application, Sprite, Text, Texture, extras, loader, Point, particles, filters} from 'pixi.js';
 import PointCoordinates from '../interfaces/point.interface';
 import ObjectToUpdate from '../interfaces/obj-to-update.interface';
-import {Emitter} from 'pixi-particles';
+import {Emitter, AnimatedParticle} from 'pixi-particles';
 
 
 const viewportWidth = 800;
@@ -17,9 +17,6 @@ app.ticker.add(function (delta) {
 });
 
 const Renderer = {
-    loadSprites: () => {
-    },
-
     createSprite(sprImagePath: string, index?: number): any {
         const sprite = Sprite.fromImage(sprImagePath);
         sprite.anchor.set(0.5);
@@ -87,14 +84,6 @@ const Renderer = {
 
             rotateAt: (angle: number): void => {
                 animatedSprite.rotation = angle;
-            },
-
-            getAngle: (): number => {
-                return animatedSprite.rotation;
-            },
-
-            getSprite: (): extras.AnimatedSprite => {
-                return animatedSprite;
             }
         };
 
@@ -118,10 +107,8 @@ const Renderer = {
     createTexture: (imagePath: string): Texture => {
         return Texture.fromImage(imagePath);
     },
-    createParticleEmitter: (images: Array<string>, config: any): any => {
+    createParticleEmitter: (images: Array<string>, config: any, type: string = ''): any => {
         const container = new particles.ParticleContainer();
-        const emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
-
         container.setProperties({
             scale: true,
             position: true,
@@ -129,6 +116,15 @@ const Renderer = {
             uvs: true,
             alpha: true
         });
+
+        let emitter;
+
+        if(type === 'anim') {
+            emitter = new Emitter(container, [{framerate: 9, loop: true, textures: images}], config);
+            emitter.particleConstructor = AnimatedParticle;
+        } else {
+            emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
+        }
 
         app.stage.addChild(container);
 
