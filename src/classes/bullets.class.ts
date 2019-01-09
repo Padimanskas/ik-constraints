@@ -22,8 +22,8 @@ export default class Bullets {
     }
 
     removeBullet(bullet: Bullet) {
-        let outsideBullet = utils.isOutOfScreen(bullet.getPosition());
-        if (outsideBullet) {
+        let isOutsideBullet = utils.isOutOfScreen(bullet.getPosition());
+        if (isOutsideBullet) {
             bullet.removeSprite();
             let bulletId = this.bullets.indexOf(bullet);
             this.bullets.splice(bulletId, 1);
