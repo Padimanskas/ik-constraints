@@ -15,7 +15,7 @@ const utils = {
 
     isOutOfScreen(position: PointCoordinates): boolean {
         const screen = render.getApp().screen;
-        return position.x < 0 || position.x - 300 > screen.width || position.y < 0 || (position.y - 300) > screen.height;
+        return position.x < 50 || position.x + 50 > screen.width || position.y < 50 || position.y + 50 > screen.height;
     }
 };
 
