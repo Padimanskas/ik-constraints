@@ -1,4 +1,4 @@
-import {Application, Sprite, Text, Texture, extras, loader, Point, particles} from 'pixi.js';
+import {Application, Sprite, Text, Texture, extras, loader, Point, particles, filters} from 'pixi.js';
 import PointCoordinates from '../interfaces/point.interface';
 import ObjectToUpdate from '../interfaces/obj-to-update.interface';
 import {Emitter} from 'pixi-particles';
@@ -43,6 +43,12 @@ const Renderer = {
             },
             remove(): void {
                 app.stage.removeChild(sprite);
+            },
+            applyFilter: (): void => {
+                Renderer.applyFilter(sprite);
+            },
+            removeFilter: (): void => {
+                Renderer.removeFilter(sprite);
             }
         };
     },
@@ -112,7 +118,7 @@ const Renderer = {
         }
     },
     createTexture: (imagePath: string): Texture => {
-      return Texture.fromImage(imagePath);
+        return Texture.fromImage(imagePath);
     },
     createParticleEmitter: (images: Array<string>, config: any): any => {
         const container = new particles.ParticleContainer();
@@ -126,26 +132,23 @@ const Renderer = {
             alpha: true
         });
 
-        emitter.emit = true;
-        emitter.autoUpdate = true;
-
-
+        app.stage.addChild(container);
 
         let elapsed = Date.now();
 
-        const update = function(){
+        const update = function () {
             requestAnimationFrame(update);
             const now = Date.now();
             emitter.update((now - elapsed) * 0.001);
             elapsed = now;
         };
 
-
-
         return {
-            emit: (): void => {
-                app.stage.addChild(container);
-                //update();
+            on: (): void => {
+                emitter.autoUpdate = emitter.emit = true;
+            },
+            off: (): void => {
+                emitter.emit = false;
             },
             remove: (): void => {
                 app.stage.removeChild(container);
@@ -153,10 +156,24 @@ const Renderer = {
             updatePosition: (point: PointCoordinates): void => {
                 container.x = point.x;
                 container.y = point.y;
+            },
+            updateSpawnPos: (point: PointCoordinates): void => {
+                emitter.updateSpawnPos(point.x, point.y);
             }
         };
 
     },
+
+    applyFilter(sprite: Sprite): void {
+        const colorMatrix = new filters.ColorMatrixFilter();
+        colorMatrix.negative();
+        sprite.filters = [colorMatrix];
+    },
+
+    removeFilter(sprite: Sprite): void {
+        sprite.filters = [];
+    },
+
     pushToUpdate(obj: ObjectToUpdate, coords?: PointCoordinates): void {
         objectsToUpdate.push({obj, coords});
     },

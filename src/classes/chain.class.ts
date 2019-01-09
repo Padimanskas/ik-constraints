@@ -3,6 +3,7 @@ import PointCoordinates from '../interfaces/point.interface';
 import renderer from '../utils/renderer';
 import utils from '../utils/utils';
 import particleSettings from '../particles/emitter-settings';
+import smokeParticleSettings from '../particles/smoke-settings';
 import Bullets from '../classes/bullets.class';
 
 export default class IKChain {
@@ -13,10 +14,10 @@ export default class IKChain {
     public IKSegment: any;
     private app: any;
     private emitter: any;
+    private smokeEmitter: any;
     public baseLink: any;
     public headLink: any;
     private bullets = new Bullets();
-
 
     constructor(size: number, interval: number, IKSeg = IKSegment) {
         this.size = size;
@@ -29,13 +30,11 @@ export default class IKChain {
             'assets/particle-2.png',
             'assets/particle-3.png'], particleSettings);
 
-        this.generate();
+        this.smokeEmitter = renderer.createParticleEmitter(['assets/smoke-particle.png'], smokeParticleSettings);
 
+        this.generate();
         this.baseLink = this.links[this.links.length - 1];
         this.headLink = this.links[0];
-
-
-
     }
 
     update(target: PointCoordinates): void {
@@ -47,6 +46,7 @@ export default class IKChain {
         link.segmentHead.y = target.y;
 
         this.emitter.updatePosition(utils.getCenterBetweenPoints(link.segmentHead, link.segmentTail));
+        this.smokeEmitter.updateSpawnPos(link.segmentHead);
 
         for (let i = 0, n = this.links.length; i < n; ++i) {
             link = this.links[i];
@@ -82,34 +82,17 @@ export default class IKChain {
     public shoot(): void {
         const link = this.headLink;
         const angle = utils.getAngleBetweenPoints(link.segmentHead, link.segmentTail);
-        this.bullets.createBullet(link.segmentHead.x, link.segmentHead.y, 5, angle);
+        this.bullets.createBullet(link.segmentHead.x, link.segmentHead.y, 20, angle);
+        this.smokeEmitter.on();
     }
 
     public prepareToShoot(): void {
-        this.emitter.emit();
+        this.emitter.on();
     }
 
     public disablePreparing(): void {
-        this.emitter.remove();
-    }
+        this.emitter.off();
 
-    public recoil(): void {
-        const link = this.headLink;
-        const angle = utils.getAngleBetweenPoints(link.segmentHead, link.segmentTail);
-
-        //this.update({x: 100 * Math.cos(angle), y: 100 * Math.cos(angle)});
-
-        //link.segmentHead.x = 100 * Math.cos(angle) - 10;
-        //link.segmentHead.y = 100 * Math.sin(angle) - 10;
-/*
-        link.segmentTail.x = 100 * Math.cos(angle);
-        link.segmentTail.y = 100 * Math.cos(angle);
-
-        link.update();
-*/
-
-
-        //console.log(link.segmentHead);
     }
 
 }
