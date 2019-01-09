@@ -26,6 +26,12 @@ crowEmitter.on();
 crowEmitter.updateSpawnPos(<PointCoordinates>{x: vpHalfWidth, y: vpHalfHeight});
 //////crows//////
 
+//////light//////
+const light = renderer.createAnimatedSprite(['assets/light-1.png', 'assets/light-2.png']);
+light.setPosition(<PointCoordinates>{x: vpHalfWidth+8, y: vpHalfHeight-55});
+light.play(0.25);
+//////light//////
+
 document.body.addEventListener('mousemove', function (e: MouseEvent) {
     mouse.x = e.offsetX;
     mouse.y = e.offsetY;
