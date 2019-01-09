@@ -31,5 +31,4 @@ document.body.addEventListener('mousedown', function (e: MouseEvent) {
 document.body.addEventListener('mouseup', function (e: MouseEvent) {
     chain.disablePreparing();
     chain.shoot();
-    chain.recoil();
 });
