@@ -17,6 +17,9 @@ app.ticker.add(function (delta) {
 });
 
 const Renderer = {
+    loadSprites: () => {
+    },
+
     createSprite(sprImagePath: string, index?: number): any {
         const sprite = Sprite.fromImage(sprImagePath);
         sprite.anchor.set(0.5);
@@ -54,49 +57,44 @@ const Renderer = {
     },
 
     createAnimatedSprite(frames: Array<string>): any {
-
-        const textureLoader = new Promise((resolve, reject) => {
-            loader.reset();
-            loader.add(frames);
-            loader.load((loader, resources) => {
-                const keys = Object.keys(resources);
-                const textures = keys.map(key => resources[key].texture);
-                resolve(<extras.AnimatedSprite>(new extras.AnimatedSprite(textures)));
-            });
-        });
-
-        textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
-            animatedSprite.anchor.set(0.5);
-            animatedSprite.scale = new Point(2, 2);
-            app.stage.addChild(animatedSprite);
-        });
+        const animatedSprite = extras.AnimatedSprite.fromImages(frames);
+        animatedSprite.anchor.set(0.5);
+        animatedSprite.scale = new Point(2, 2);
+        app.stage.addChild(animatedSprite);
 
         return {
             play: (speed: number): void => {
-                textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
-                    animatedSprite.animationSpeed = speed;
-                    animatedSprite.gotoAndPlay(0);
-                });
+                animatedSprite.animationSpeed = speed;
+                animatedSprite.play();
+            },
+
+            playOnce: (speed: number): void => {
+                animatedSprite.animationSpeed = speed;
+                animatedSprite.loop = false;
+                animatedSprite.play();
+                animatedSprite.onComplete = () => animatedSprite.destroy();
+            },
+
+            remove(): void {
+                app.stage.removeChild(animatedSprite);
             },
 
             setPosition: (coords: PointCoordinates): void => {
                 const {x, y} = coords;
-
-                textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
-                    animatedSprite.x = x;
-                    animatedSprite.y = y;
-                });
+                animatedSprite.x = x;
+                animatedSprite.y = y;
             },
 
             rotateAt: (angle: number): void => {
-                textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
-                    animatedSprite.rotation = angle;
-                });
+                animatedSprite.rotation = angle;
             },
-            getAngle: async (): Promise<number> => {
-                return await textureLoader.then((animatedSprite: extras.AnimatedSprite) => {
-                    return animatedSprite.rotation;
-                });
+
+            getAngle: (): number => {
+                return animatedSprite.rotation;
+            },
+
+            getSprite: (): extras.AnimatedSprite => {
+                return animatedSprite;
             }
         };
 

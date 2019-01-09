@@ -30,6 +30,9 @@ export default class IKChain {
             'assets/particle-2.png',
             'assets/particle-3.png'], particleSettings);
 
+
+
+
         this.smokeEmitter = renderer.createParticleEmitter(['assets/smoke-particle.png'], smokeParticleSettings);
 
         this.generate();
