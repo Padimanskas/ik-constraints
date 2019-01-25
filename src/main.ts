@@ -3,7 +3,9 @@ import renderer from './utils/renderer';
 import PointCoordinates from './interfaces/point.interface';
 import crowParticleSettings from './particles/crow-settings';
 
-const chain = new IKChain(5, 105);
+import HomingMissile from './classes/bullets/homing-missile.class';
+
+/*const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};
 const mouse = <PointCoordinates>{x: 0, y: 0};
 
@@ -59,4 +61,36 @@ document.body.addEventListener('mousedown', function (e: MouseEvent) {
 document.body.addEventListener('mouseup', function (e: MouseEvent) {
     chain.disablePreparing();
     chain.shoot();
+});*/
+
+const missiles = [];
+let pos = {x: 0, y: 0};
+
+document.body.addEventListener('mousemove', function (e: MouseEvent) {
+    pos.x = e.offsetX;
+    pos.y = e.offsetY;
 });
+
+/*
+setInterval(() => {
+    missiles.push(new HomingMissile(pos.x, pos.y, 400, 300));
+},100)
+*/
+
+
+renderer.pushToUpdate({update: () => {
+    missiles.forEach((missile, missileId, missiles) => {
+        missile.update();
+        if(missile.isTargetAchieved()) {
+            console.log(missiles);
+            missiles[missileId].removeSprite();
+            missiles.splice(missileId, 1);
+        }
+    });
+}});
+
+
+
+
+
+

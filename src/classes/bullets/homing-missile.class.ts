@@ -1,12 +1,15 @@
+import renderer from '../../utils/renderer';
+import PointCoordinates from '../../interfaces/point.interface';
+
 export default class HomingMissile {
 
     private rotation = 0;
     private speed = 20;
-    private turn = 7;
-    private targetX = 0;
-    private targetY = 0;
+    private turn = 10;
 
-    constructor(public x = 0, public y = 0) {}
+    private missileSprite = renderer.createSprite('assets/missile.png');
+
+    constructor(public x = 0, public y = 0, private targetX = 0, private targetY = 0) {}
 
     update() {
         let angle = Math.atan2(this.targetY - this.y, this.targetX - this.x);
@@ -29,5 +32,20 @@ export default class HomingMissile {
 
         this.x += Math.cos(this.rotation) * this.speed;
         this.y += Math.sin(this.rotation) * this.speed;
+
+        this.missileSprite.setPosition({x: this.x, y: this.y});
+        this.missileSprite.rotateAt(this.rotation);
+
     }
+
+    isTargetAchieved() {
+        const diffX = this.targetX - this.x;
+        const diffY = this.targetY - this.y;
+        return Math.sqrt(diffX * diffX + diffY * diffY) < 10;
+    }
+
+    removeSprite() {
+        this.missileSprite = null;
+    }
+
 }
