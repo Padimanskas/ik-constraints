@@ -2,6 +2,7 @@ import IKChain from './classes/chain.class';
 import renderer from './utils/renderer';
 import PointCoordinates from './interfaces/point.interface';
 import crowParticleSettings from './particles/crow-settings';
+import ParticleType from './interfaces/particle.interface';
 
 const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};
@@ -21,7 +22,7 @@ renderer.pushToUpdate({update: () => {
 renderer.pushToUpdate(chain, target);
 
 //////crows//////
-const crowEmitter = renderer.createParticleEmitter(['assets/crow-1.png', 'assets/crow-2.png'], crowParticleSettings, 'anim');
+const crowEmitter = renderer.createParticleEmitter(['assets/crow-1.png', 'assets/crow-2.png'], crowParticleSettings, ParticleType.ANIMATED);
 crowEmitter.on();
 crowEmitter.updateSpawnPos(<PointCoordinates>{x: vpHalfWidth, y: vpHalfHeight});
 //////crows//////

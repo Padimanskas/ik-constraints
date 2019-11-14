@@ -1,7 +1,8 @@
-import {Application, Sprite, Text, Texture, extras, loader, Point, particles, filters} from 'pixi.js';
+import {Application, extras, filters, particles, Point, Sprite, Text, Texture} from 'pixi.js';
 import PointCoordinates from '../interfaces/point.interface';
 import ObjectToUpdate from '../interfaces/obj-to-update.interface';
-import {Emitter, AnimatedParticle} from 'pixi-particles';
+import {AnimatedParticle, Emitter} from 'pixi-particles';
+import ParticleType from "../interfaces/particle.interface";
 
 
 const viewportWidth = 800;
@@ -107,7 +108,7 @@ const Renderer = {
     createTexture: (imagePath: string): Texture => {
         return Texture.fromImage(imagePath);
     },
-    createParticleEmitter: (images: Array<string>, config: any, type: string = ''): any => {
+    createParticleEmitter: (images: Array<string>, config: any, type: ParticleType = ParticleType.STATIC): any => {
         const container = new particles.ParticleContainer();
         container.setProperties({
             scale: true,
@@ -119,10 +120,12 @@ const Renderer = {
 
         let emitter;
 
-        if(type === 'anim') {
+        if(type === ParticleType.ANIMATED) {
             emitter = new Emitter(container, [{framerate: 9, loop: true, textures: images}], config);
             emitter.particleConstructor = AnimatedParticle;
-        } else {
+        }
+
+        if(type === ParticleType.STATIC) {
             emitter = new Emitter(container, images.map(imageName => Renderer.createTexture(imageName)), config);
         }
 
