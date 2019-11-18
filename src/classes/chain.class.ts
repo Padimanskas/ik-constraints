@@ -1,10 +1,10 @@
-import IKSegment from './segment.class';
-import PointCoordinates from '../interfaces/point.interface';
-import renderer from '../utils/renderer';
-import utils from '../utils/utils';
-import particleSettings from '../particles/emitter-settings';
-import smokeParticleSettings from '../particles/smoke-settings';
-import Bullets from '../classes/bullets.class';
+import IKSegment from '@classes/segment.class';
+import PointCoordinates from '@interfaces/point.interface';
+import renderer from '@utils/renderer';
+import utils from '@utils/utils';
+import particleSettings from '@particles/emitter-settings';
+import smokeParticleSettings from '@particles/smoke-settings';
+import Bullets from '@classes/bullets.class';
 
 export default class IKChain {
 

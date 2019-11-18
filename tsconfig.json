@@ -7,6 +7,13 @@
       "es5",
       "es2015.promise",
       "dom"
-    ]
+    ],
+    "baseUrl":".",
+    "paths": {
+      "@utils/*" :["./src/utils/*"],
+      "@classes/*" :["./src/classes/*"],
+      "@interfaces/*" :["./src/interfaces/*"],
+      "@particles/*" :["./src/particles/*"]
+    }
   }
 }

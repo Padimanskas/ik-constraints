@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     entry: './src/main.ts',
     devtool: 'source-map',
@@ -23,7 +25,13 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            '@utils': path.resolve(__dirname, 'src/utils/'),
+            '@classes': path.resolve(__dirname, 'src/classes/'),
+            '@interfaces': path.resolve(__dirname, 'src/interfaces/'),
+            '@particles': path.resolve(__dirname, 'src/particles/')
+        }
     },
 
     devServer: {

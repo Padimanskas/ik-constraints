@@ -1,8 +1,8 @@
 import {Application, extras, filters, particles, Point, Sprite, Text, Texture} from 'pixi.js';
-import PointCoordinates from '../interfaces/point.interface';
-import ObjectToUpdate from '../interfaces/obj-to-update.interface';
+import PointCoordinates from '@interfaces/point.interface';
+import ObjectToUpdate from '@interfaces/obj-to-update.interface';
 import {AnimatedParticle, Emitter} from 'pixi-particles';
-import ParticleType from "../interfaces/particle.interface";
+import ParticleType from "@interfaces/particle.interface";
 
 
 const viewportWidth = 800;

@@ -1,4 +1,4 @@
-import PointCoordinates from '../../interfaces/point.interface';
+import PointCoordinates from '@interfaces/point.interface';
 
 export default class Constraint {
 

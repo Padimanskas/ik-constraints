@@ -1,5 +1,5 @@
-import PointCoordinates from '../interfaces/point.interface'
-import render from '../utils/renderer';
+import PointCoordinates from '@interfaces/point.interface'
+import render from '@utils/renderer';
 
 const utils = {
 

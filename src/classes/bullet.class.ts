@@ -1,5 +1,5 @@
-import renderer from '../utils/renderer'
-import PointCoordinates from '../interfaces/point.interface';
+import renderer from '@utils/renderer'
+import PointCoordinates from '@interfaces/point.interface';
 
 export default class Bullet {
 

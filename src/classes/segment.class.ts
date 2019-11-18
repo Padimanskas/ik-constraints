@@ -1,6 +1,6 @@
-import PointCoordinates from '../interfaces/point.interface';
-import render from '../utils/renderer';
-import Utils from '../utils/utils';
+import PointCoordinates from '@interfaces/point.interface';
+import render from '@utils/renderer';
+import Utils from '@utils/utils';
 
 export default class IKSegment {
 

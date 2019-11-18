@@ -1,4 +1,4 @@
-import PointCoordinates from './point.interface';
+import PointCoordinates from '@interfaces/./point.interface';
 
 interface SpriteInterface {
     getPosition: () => PointCoordinates;

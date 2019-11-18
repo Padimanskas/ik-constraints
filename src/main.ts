@@ -1,8 +1,8 @@
-import IKChain from './classes/chain.class';
-import renderer from './utils/renderer';
-import PointCoordinates from './interfaces/point.interface';
-import crowParticleSettings from './particles/crow-settings';
-import ParticleType from './interfaces/particle.interface';
+import IKChain from '@classes/chain.class';
+import renderer from '@utils/renderer';
+import PointCoordinates from '@interfaces/point.interface';
+import crowParticleSettings from '@particles/crow-settings';
+import ParticleType from '@interfaces/particle.interface';
 
 const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};

@@ -1,6 +1,6 @@
-import render from '../utils/renderer'
-import utils from '../utils/utils'
-import Bullet from '../classes/bullet.class';
+import render from '@utils/renderer'
+import utils from '@utils/utils'
+import Bullet from '@classes/bullet.class';
 
 export default class Bullets {
 
