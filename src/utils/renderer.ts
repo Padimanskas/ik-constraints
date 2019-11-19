@@ -167,16 +167,34 @@ const Renderer = {
         sprite.filters = [colorMatrix];
     },
 
-    removeFilter(sprite: Sprite): void {
-        sprite.filters = [];
+    removeFilter(sprite?: Sprite): void {
+        sprite.filters = null;
     },
 
     pushToUpdate(obj: ObjectToUpdate, coords?: PointCoordinates): void {
         objectsToUpdate.push({obj, coords});
     },
+
     getApp(): Application {
         return app;
+    },
+
+    blink(callback: (n: boolean) => any, time: number): void {
+        let elapsed = Date.now();
+        let n = true;
+
+        this.pushToUpdate({
+            update: () => {
+                let now = Date.now();
+                if ((now - elapsed) > time) {
+                    n = !n;
+                    callback.call(this, n);
+                    elapsed = now;
+                }
+            }
+        });
     }
+
 };
 
 export default Renderer;

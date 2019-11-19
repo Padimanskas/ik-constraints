@@ -14,6 +14,10 @@ const vpHalfHeight = app.screen.height / 1.25;
 const base = renderer.createSprite('assets/base.png', 100);
 base.setPosition(<PointCoordinates>{x: vpHalfWidth, y: vpHalfHeight});
 
+renderer.blink((switcher: boolean) => {
+    switcher ? base.applyFilter() : base.removeFilter();
+}, 300);
+
 renderer.pushToUpdate({update: () => {
     target.x += mouse.x - target.x;
     target.y += mouse.y - target.y;
