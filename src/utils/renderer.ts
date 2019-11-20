@@ -156,7 +156,8 @@ const Renderer = {
             },
             updateSpawnPos: (point: PointCoordinates): void => {
                 emitter.updateSpawnPos(point.x, point.y);
-            }
+            },
+            getEmitterState: (): boolean => emitter.emit
         };
 
     },
@@ -179,16 +180,16 @@ const Renderer = {
         return app;
     },
 
-    blink(callback: (n: boolean) => any, time: number): void {
+    blink(callback: (n: boolean) => any, time: number, context?: any): void {
         let elapsed = Date.now();
-        let n = true;
+        let blinkState = true;
 
         this.pushToUpdate({
             update: () => {
                 let now = Date.now();
                 if ((now - elapsed) > time) {
-                    n = !n;
-                    callback.call(this, n);
+                    blinkState = !blinkState;
+                    callback.call(context || this, blinkState);
                     elapsed = now;
                 }
             }
