@@ -1,4 +1,4 @@
-import IKSegment from '@classes/segment.class';
+import { IKSegment as IKSeg } from '@classes/segment.class';
 import PointCoordinates from '@interfaces/point.interface';
 import renderer from '@utils/renderer';
 import utils from '@utils/utils';
@@ -8,10 +8,7 @@ import Bullets from '@classes/bullets.class';
 
 export default class IKChain {
 
-    public size: number;
-    public interval: number;
-    public links: Array<IKSegment>;
-    public IKSegment: any;
+    public links: Array<IKSeg>;
     private app: any;
     private emitter: any;
     private smokeEmitter: any;
@@ -19,11 +16,11 @@ export default class IKChain {
     public headLink: any;
     private bullets = new Bullets();
 
-    constructor(size: number, interval: number, IKSeg = IKSegment) {
+    constructor(public size: number, public interval: number, public IKSegment: any = IKSeg) {
         this.size = size;
         this.interval = interval;
         this.links = [];
-        this.IKSegment = IKSeg;
+
         this.app = renderer.getApp();
         this.emitter = renderer.createParticleEmitter([
             'assets/particle-1.png',

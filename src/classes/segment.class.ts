@@ -2,7 +2,7 @@ import PointCoordinates from '@interfaces/point.interface';
 import render from '@utils/renderer';
 import Utils from '@utils/utils';
 
-export default class IKSegment {
+export class IKSegment {
 
     public segmentSize: number;
     public segmentHead: PointCoordinates = {x: 0, y: 0};
