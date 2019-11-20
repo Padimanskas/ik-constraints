@@ -39,9 +39,6 @@ const Renderer = {
             setAnchor: (x: number, y: number): void => {
                 sprite.anchor.set(x, y);
             },
-            setIndex: (index: number): void => {
-                app.stage.setChildIndex(sprite, index);
-            },
             remove(): void {
                 app.stage.removeChild(sprite);
             },
