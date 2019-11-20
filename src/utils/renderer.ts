@@ -50,6 +50,9 @@ const Renderer = {
             },
             removeFilter: (): void => {
                 Renderer.removeFilter(sprite);
+            },
+            setZOrder: (order: number): void => {
+                app.stage.setChildIndex(sprite, order);
             }
         };
     },
@@ -85,13 +88,18 @@ const Renderer = {
 
             rotateAt: (angle: number): void => {
                 animatedSprite.rotation = angle;
+            },
+
+            setZOrder: (order: number): void => {
+                app.stage.setChildIndex(animatedSprite, order);
             }
         };
 
     },
 
-    createText(text: string) {
-        const pixiText = new Text(text);
+    createText(text: string, style?: any) {
+        const pixiTextStyle = new PIXI.TextStyle(style);
+        const pixiText = new Text(text, pixiTextStyle);
         app.stage.addChild(pixiText);
 
         return {
@@ -102,9 +110,16 @@ const Renderer = {
             },
             setText: (text: string): void => {
                 pixiText.text = text;
+            },
+            setTextStyle: (textStyle: any): void => {
+                pixiText.style = textStyle;
+            },
+            setZOrder: (order: number): void => {
+                app.stage.setChildIndex(pixiText, order);
             }
         }
     },
+
     createTexture: (imagePath: string): Texture => {
         return Texture.fromImage(imagePath);
     },
@@ -157,7 +172,10 @@ const Renderer = {
             updateSpawnPos: (point: PointCoordinates): void => {
                 emitter.updateSpawnPos(point.x, point.y);
             },
-            getEmitterState: (): boolean => emitter.emit
+            getEmitterState: (): boolean => emitter.emit,
+            setZOrder: (order: number): void => {
+                app.stage.setChildIndex(container, order);
+            }
         };
 
     },
