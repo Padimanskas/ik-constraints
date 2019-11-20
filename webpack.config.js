@@ -4,8 +4,8 @@ module.exports = {
     entry: './src/main.ts',
     devtool: 'source-map',
     output: {
-        path: __dirname,
-        filename: './dist/[name].js'
+        path: path.resolve(__dirname, 'dist/'),
+        filename: 'main.js'
     },
     module: {
         rules: [            {
