@@ -13,7 +13,8 @@
       "@utils/*" :["./src/utils/*"],
       "@classes/*" :["./src/classes/*"],
       "@interfaces/*" :["./src/interfaces/*"],
-      "@particles/*" :["./src/particles/*"]
+      "@particles/*" :["./src/particles/*"],
+      "@constants/*" :["./src/constants/*"]
     }
   }
 }

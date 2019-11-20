@@ -30,7 +30,8 @@ module.exports = {
             '@utils': path.resolve(__dirname, 'src/utils/'),
             '@classes': path.resolve(__dirname, 'src/classes/'),
             '@interfaces': path.resolve(__dirname, 'src/interfaces/'),
-            '@particles': path.resolve(__dirname, 'src/particles/')
+            '@particles': path.resolve(__dirname, 'src/particles/'),
+            '@constants': path.resolve(__dirname, 'src/constants/')
         }
     },
 
