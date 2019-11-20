@@ -3,15 +3,16 @@ import renderer from '@utils/renderer';
 import PointCoordinates from '@interfaces/point.interface';
 import crowParticleSettings from '@particles/crow-settings';
 import ParticleType from '@interfaces/particle.interface';
+import {textStyles} from "@constants/text-styles.const";
 
-const chain = new IKChain(5, 105);
+/*const chain = new IKChain(5, 105);
 const target = <PointCoordinates>{x: 0, y: 0};
-const mouse = <PointCoordinates>{x: 0, y: 0};
+const mouse = <PointCoordinates>{x: 0, y: 0};*/
 
 const app = renderer.getApp();
 const vpHalfWidth = app.screen.width / 2;
 const vpHalfHeight = app.screen.height / 1.25;
-const base = renderer.createSprite('assets/base.png', 100);
+/*const base = renderer.createSprite('assets/base.png', 100);
 base.setPosition(<PointCoordinates>{x: vpHalfWidth, y: vpHalfHeight});
 
 renderer.blink((switcher: boolean) => {
@@ -64,4 +65,23 @@ document.body.addEventListener('mousedown', function (e: MouseEvent) {
 document.body.addEventListener('mouseup', function (e: MouseEvent) {
     chain.disablePreparing();
     chain.shoot();
+});*/
+
+const someText = renderer.createText('something goes here', 'red');
+const someText2 = renderer.createText('something goes here', 'red');
+someText.setPosition({x: 100, y: 100});
+someText2.setPosition({x: 110, y: 110});
+someText.setTextStyle(textStyles.firstColor);
+
+someText.setZOrder(1);
+someText2.setZOrder(0);
+
+const fog = renderer.createParticleEmitter(['assets/base.png'], crowParticleSettings);
+//fog.on();
+fog.updatePosition({x: vpHalfWidth, y: vpHalfHeight});
+
+
+document.body.addEventListener('mousedown', function (e: MouseEvent) {
+    fog.getEmitterState() ? fog.off() : fog.on();
+    fog.setZOrder(0);
 });
