@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.2" tiledversion="2019.11.20" name="test-map" tilewidth="16" tileheight="16" tilecount="1260" columns="42">
+ <image source="test-map.png" width="672" height="480"/>
+ <tile id="0">
+  <properties>
+   <property name="s" value=""/>
+  </properties>
+ </tile>
+</tileset>
